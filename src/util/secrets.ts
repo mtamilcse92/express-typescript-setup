@@ -1,0 +1,30 @@
+import logger from "./logger";
+import dotenv from "dotenv";
+import chalk from "chalk";
+import fs from "fs";
+
+if (fs.existsSync(".env")) {
+    console.log(chalk.yellow("Using .env file to supply config environment variables"));
+    dotenv.config({ path: ".env" });
+} else {
+    console.log(chalk.yellow("Using .env.example file to supply config environment variables"));
+    dotenv.config({ path: ".env.example" }); 
+}
+export const ENVIRONMENT = process.env.NODE_ENV;
+const isProd = ENVIRONMENT === "production";
+
+export const SESSION_SECRET = process.env["SESSION_SECRET"];
+export const MONGODB_URI = isProd ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
+
+if (!SESSION_SECRET) {
+    logger.error("No client secret. Set SESSION_SECRET environment variable.");
+    process.exit(1);
+}
+
+if (!MONGODB_URI) {
+    if (isProd)
+        logger.error("No mongo connection string. Set MONGODB_URI environment variable.");
+    else
+        logger.error("No mongo connection string. Set MONGODB_URI_LOCAL environment variable.");
+    process.exit(1);
+}
