@@ -1,6 +1,10 @@
-import UserRepo from "../repository/User";
+import CrudRepo from "../repository/Crud";
+import { ModelName } from "../models/ModelMap";
 
-export default new class UserService extends UserRepo {
+export default new class UserService extends CrudRepo {
+    constructor() {
+        super(ModelName.User);
+    }
     public async getUsers(): Promise<object[]> {
         return await super.find();
     }
@@ -9,7 +13,7 @@ export default new class UserService extends UserRepo {
         return await super.save(payload);
     }
 
-    public async updateUser(id: string, payload: object): Promise<void | object>  {
+    public async updateUser(id: string, payload: object): Promise<void | object> {
         return await super.update(id, payload);
     }
 
