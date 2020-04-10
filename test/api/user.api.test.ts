@@ -15,7 +15,7 @@ afterAll(async (): Promise<void> => {
 });
 
 
-describe("User Flow Api test", () => {
+describe("API: User Flow Api test", () => {
     const app: any = new App().app;
 
     it("should return 200 and return user information", done => {

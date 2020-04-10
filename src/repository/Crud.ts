@@ -14,7 +14,7 @@ export default class CrudRepo {
     }
 
     public async update(_id: string, payload: object) {
-        return await getModel(this.modelName).findOneAndUpdate({ _id }, payload, { upsert: true });
+        return await getModel(this.modelName).findOneAndUpdate({ _id }, payload, { upsert: true, useFindAndModify: false });
     }
 
     public async updateByQuery(query: object, payload: object) {
