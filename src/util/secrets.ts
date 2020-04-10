@@ -3,18 +3,20 @@ import dotenv from "dotenv";
 import chalk from "chalk";
 import fs from "fs";
 
+const log: any = console.log;
+
 if (fs.existsSync(".env")) {
-    console.log(chalk.yellow("Using .env file to supply config environment variables"));
+    log(chalk.yellow("Using .env file to supply config environment variables"));
     dotenv.config({ path: ".env" });
 } else {
-    console.log(chalk.yellow("Using .env.example file to supply config environment variables"));
+    log(chalk.yellow("Using .env.example file to supply config environment variables"));
     dotenv.config({ path: ".env.example" }); 
 }
-export const ENVIRONMENT = process.env.NODE_ENV;
+export const ENVIRONMENT: string | number = process.env.NODE_ENV;
 const isProd = ENVIRONMENT === "production";
 
-export const SESSION_SECRET = process.env["SESSION_SECRET"];
-export const MONGODB_URI = isProd ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
+export const SESSION_SECRET: string = process.env["SESSION_SECRET"];
+export const MONGODB_URI: string = isProd ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
 
 if (!SESSION_SECRET) {
     logger.error("No client secret. Set SESSION_SECRET environment variable.");

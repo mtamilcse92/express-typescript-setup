@@ -1,6 +1,6 @@
 
 import { Request, Response, NextFunction, Express } from "express";
-import compression from "compression";  // compresses requests
+import compression from "compression"; 
 import session from "express-session";
 import errorHandler from "errorhandler";
 import bodyParser from "body-parser";
@@ -10,7 +10,7 @@ import flash from "express-flash";
 import passport from "passport";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
-const mongoUrl = MONGODB_URI;
+const mongoUrl: string = MONGODB_URI;
 const MongoStore = mongo(session);
 
 const sessionConfig = {
@@ -23,7 +23,7 @@ const sessionConfig = {
     })
 };
 
-export default (app: Express) => {
+export default (app: Express): void => {
     app.use(compression());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));

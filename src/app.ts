@@ -19,7 +19,7 @@ class App {
         initializeMiddlewares(app);
     }
 
-    private async connectMongo() {
+    private async connectMongo(): Promise<any> {
         try {
             await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
         } catch (err) {
@@ -31,9 +31,9 @@ class App {
 
     public listen(port: number) {
         this.app.listen(port, () => {
-            const env = this.app.get("env");
-            const url = `http://localhost:${port}`;
-            const message = `App is running at ${chalk.green.underline.bold(url)} in ${chalk.green(env)} mode`;
+            const env: string = this.app.get("env");
+            const url: string = `http://localhost:${port}`;
+            const message: string = `App is running at ${chalk.green.underline.bold(url)} in ${chalk.green(env)} mode`;
             log(message);
             log(`Press ${chalk.red.underline("CTRL-C")} to stop\n`);
             routes(this.app);
