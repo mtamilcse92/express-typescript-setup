@@ -85,6 +85,7 @@
     "concurrently": "^5.0.0",
     "eslint": "^6.4.0",
     "jest": "^24.9.0",
+    "mongodb-memory-server": "^6.5.2",
     "node-sass": "^4.13.0",
     "nodemon": "^1.19.2",
     "shelljs": "^0.8.3",

@@ -17,6 +17,7 @@ class App {
         this.app = app;
         this.connectMongo();
         initializeMiddlewares(app);
+        this.initializeRoutes()
     }
 
     private async connectMongo(): Promise<any> {
@@ -29,6 +30,10 @@ class App {
 
     }
 
+    private initializeRoutes(): void {
+        routes(this.app);
+    }
+
     public listen(port: number) {
         this.app.listen(port, () => {
             const env: string = this.app.get("env");
@@ -36,7 +41,6 @@ class App {
             const message: string = `App is running at ${chalk.green.underline.bold(url)} in ${chalk.green(env)} mode`;
             log(message);
             log(`Press ${chalk.red.underline("CTRL-C")} to stop\n`);
-            routes(this.app);
         });
     }
 }

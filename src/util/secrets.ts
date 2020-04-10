@@ -5,6 +5,9 @@ import fs from "fs";
 
 const log: any = console.log;
 
+export const ENVIRONMENT: string | number = process.env.NODE_ENV;
+const isProd: boolean = ENVIRONMENT === "production";
+
 if (fs.existsSync(".env")) {
     log(chalk.yellow("Using .env file to supply config environment variables"));
     dotenv.config({ path: ".env" });
@@ -12,8 +15,6 @@ if (fs.existsSync(".env")) {
     log(chalk.yellow("Using .env.example file to supply config environment variables"));
     dotenv.config({ path: ".env.example" }); 
 }
-export const ENVIRONMENT: string | number = process.env.NODE_ENV;
-const isProd = ENVIRONMENT === "production";
 
 export const SESSION_SECRET: string = process.env["SESSION_SECRET"];
 export const MONGODB_URI: string = isProd ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];

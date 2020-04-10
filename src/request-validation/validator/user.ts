@@ -1,8 +1,7 @@
 import { body } from "express-validator";
 
-export default () => {
-  return [
+export default () =>
+  ([
     body("email").isEmail(),
     body("password").isLength({ min: 5 }),
-  ];
-};
+  ]);
