@@ -23,7 +23,8 @@ coverage
 .env
 
 # Dependency directory
-node_modules
+server/node_modules
+client/node_modules
 bower_components
 
 # Editors
@@ -35,7 +36,8 @@ bower_components
 Thumbs.db
 
 # Ignore built ts files
-dist/**/*
+client/dist/**/*
+server/dist/**/*
 
 # ignore yarn.lock
 yarn.lock

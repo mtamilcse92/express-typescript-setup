@@ -1,0 +1,1 @@
+export const mongoConnectionFailed: string = "MongoDB connection error. Please make sure MongoDB is running. \n";

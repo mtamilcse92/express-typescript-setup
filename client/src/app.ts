@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import bluebird from "bluebird";
 import routes from "./routes";
 import initializeMiddlewares from "./initializeMiddlewares";
-import { MONGODB_URI } from "./util/secrets";
-import { mongoConnectionFailed } from "./constants/messags";
 
 const log = console.log;
 mongoose.Promise = bluebird;
@@ -15,19 +13,8 @@ class App {
     constructor() {
         const app = express();
         this.app = app;
-        this.connectMongo();
         initializeMiddlewares(app);
         this.initializeRoutes()
-    }
-
-    private async connectMongo(): Promise<any> {
-        try {
-            await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
-        } catch (err) {
-            log(`${chalk.red(mongoConnectionFailed)} ${err}`);
-            process.exit();
-        }
-
     }
 
     private initializeRoutes(): void {

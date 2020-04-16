@@ -5,8 +5,14 @@ export default new class UserService extends CrudRepo {
     constructor() {
         super(ModelName.User);
     }
-    public async getUsers(): Promise<object[]> {
-        return await super.find();
+    public async getUsers(call: any, callback: any): Promise<any> {
+        try {
+            const users: any = await super.find();            
+            callback(null, {users})
+        } catch (error) {
+            console.error(error);
+            
+        }
     }
 
     public async saveUser(payload: object): Promise<void | object> {

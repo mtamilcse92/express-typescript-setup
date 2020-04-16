@@ -24,6 +24,7 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"yarn run watch-ts\" \"yarn run serve-debug\""
   },
   "dependencies": {
+    "@grpc/proto-loader": "^0.5.4",
     "async": "^3.1.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.5",
@@ -38,6 +39,7 @@
     "express-session": "^1.16.2",
     "express-validator": "^6.4.0",
     "fbgraph": "^1.4.4",
+    "grpc": "^1.24.2",
     "lodash": "^4.17.15",
     "lusca": "^1.6.1",
     "mongoose": "^5.7.5",

@@ -1,0 +1,37 @@
+syntax = "proto3";
+package user;
+
+// service definition
+
+service UserService {
+  rpc listUsers(Empty) returns (UserList) {}
+  rpc createUser(newUser) returns (result) {}
+  rpc updateUser(User) returns (result) {}
+  rpc deleteUser(UserId) returns (result) {}
+}
+
+// message type definitions
+
+message Empty {}
+
+message UserList {
+  repeated User Users = 1;
+}
+
+message UserId {
+  int32 id = 1;
+}
+
+message User {
+  string email = 1;
+  string password = 2;
+}
+
+message newUser {
+  string email = 1;
+  string password = 2;
+}
+
+message result {
+  string status = 1;
+}

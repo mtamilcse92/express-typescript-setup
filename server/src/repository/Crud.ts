@@ -1,4 +1,6 @@
 import getModel from "../models/ModelMap";
+import { User } from "../models/User";
+
 
 export default class CrudRepo {
     modelName: string;
@@ -6,25 +8,25 @@ export default class CrudRepo {
         this.modelName= modelName;
     }
     public async find(query: object = {}) {
-        return await getModel(this.modelName).find(query);
+        return await User.find(query);
     }
 
     public async save(payload: object) {
-        return await getModel(this.modelName).create(payload);
+        return await User.create(payload);
     }
 
     public async update(_id: string, payload: object) {
-        return await getModel(this.modelName).findOneAndUpdate({ _id }, payload, { upsert: true, useFindAndModify: false });
+        return await User.findOneAndUpdate({ _id }, payload);
     }
 
     public async updateByQuery(query: object, payload: object) {
-        return await getModel(this.modelName).update(query, payload, { upsert: true });
+        return await User.update(query, payload, { upsert: true });
     }
 
     public async delete(_id: string) {
-        return await getModel(this.modelName).remove({ _id });
+        return await User.remove({ _id });
     }
     public async deleteByQuery(query: object) {
-        return await getModel(this.modelName).deleteMany(query);
+        return await User.deleteMany(query);
     }
 }

@@ -1,11 +1,14 @@
 import * as express from "express";
 import BaseController from "./BaseController";
-import UserService from "../service/User";
+import client from "./client";
 export default new class UserController extends BaseController {
     public async getUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
-            const users: object[] = await UserService.getUsers();
-            return super.ok(res, { users });
+            client.listUsers({}, (err: any, result: any) => {
+                console.log(result, err);
+                
+                return super.ok(res, { users: result });
+              });
         } catch (err) {
             return super.internalError(res, err);
         }
@@ -14,7 +17,6 @@ export default new class UserController extends BaseController {
     public async createUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
             const userInfo: object = super.getBody(req);
-            await UserService.saveUser(userInfo);
             return super.ok(res, { userInfo });
         } catch (err) {
             return super.internalError(res, err);
@@ -25,7 +27,6 @@ export default new class UserController extends BaseController {
         try {
             const id: string = super.getParam(req, "id");
             const userInfo: object = super.getBody(req);
-            await UserService.updateUser(id,userInfo);
             return super.accepted(res, { userInfo });
         } catch (err) {
             return super.internalError(res, err);
@@ -36,7 +37,6 @@ export default new class UserController extends BaseController {
     public async deleteUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
             const id: string = super.getParam(req, "id");
-            await UserService.deleteUser(id);
             return super.ok(res);
         } catch (err) {
             return super.internalError(res, err);
