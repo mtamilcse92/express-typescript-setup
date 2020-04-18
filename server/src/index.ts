@@ -12,27 +12,28 @@ import { mongoConnectionFailed } from "./constants/messags";
 const log = console.log;
 mongoose.Promise = bluebird;
 
-const options =  {keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true
-  }
+const options = {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  defaults: true,
+  oneofs: true
+}
 
 const userProtoPath = path.join('..', 'protos', 'user.proto');
 const userProtoDefinition = protoLoader.loadSync(userProtoPath, options);
 const userPackageDefinition: any = grpc.loadPackageDefinition(userProtoDefinition).user;
 
- const connectMongo = async () => {
-    try {
-        await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
-    } catch (err) {
-        log(`${chalk.red(mongoConnectionFailed)} ${err}`);
-        process.exit();
-    }
+const connectMongo = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+  } catch (err) {
+    log(`${chalk.red(mongoConnectionFailed)} ${err}`);
+    process.exit();
+  }
 }
 
-async function main() { 
+async function main() {
   await connectMongo();
   const server = new grpc.Server();
   server.addService(userPackageDefinition.UserService.service, {

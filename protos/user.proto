@@ -5,8 +5,8 @@ package user;
 
 service UserService {
   rpc listUsers(Empty) returns (UserList) {}
-  rpc createUser(newUser) returns (result) {}
-  rpc updateUser(User) returns (result) {}
+  rpc createUser(NewUser) returns (User) {}
+  rpc updateUser(UpdateUser) returns (User) {}
   rpc deleteUser(UserId) returns (result) {}
 }
 
@@ -15,19 +15,29 @@ service UserService {
 message Empty {}
 
 message UserList {
-  repeated User Users = 1;
+  repeated User users = 1;
 }
 
 message UserId {
-  int32 id = 1;
+  string id = 1;
 }
 
 message User {
   string email = 1;
   string password = 2;
+  string updatedAt =3;
+  string createdAt =4;
+  string _id = 5;
 }
 
-message newUser {
+
+message UpdateUser {
+  string email = 1;
+  string password = 2;
+  string _id = 3;
+}
+
+message NewUser {
   string email = 1;
   string password = 2;
 }

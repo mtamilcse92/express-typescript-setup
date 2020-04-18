@@ -5,10 +5,9 @@ export default new class UserController extends BaseController {
     public async getUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
             client.listUsers({}, (err: any, result: any) => {
-                console.log(result, err);
-                
+                if (err !== null) return super.internalError(res, err);
                 return super.ok(res, { users: result });
-              });
+            });
         } catch (err) {
             return super.internalError(res, err);
         }
@@ -17,7 +16,10 @@ export default new class UserController extends BaseController {
     public async createUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
             const userInfo: object = super.getBody(req);
-            return super.ok(res, { userInfo });
+            client.createUser(userInfo, (err: any, user: any) => {
+                if (err !== null) return super.internalError(res, err);
+                return super.ok(res, { user });
+            });
         } catch (err) {
             return super.internalError(res, err);
         }
@@ -25,10 +27,15 @@ export default new class UserController extends BaseController {
 
     public async updateUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
-            const id: string = super.getParam(req, "id");
+            const _id: string = super.getParam(req, "id");
             const userInfo: object = super.getBody(req);
-            return super.accepted(res, { userInfo });
+
+            client.updateUser(({ ...userInfo, _id }), (err: any, user: any) => {
+                if (err !== null) return super.internalError(res, err);
+                return super.accepted(res, { user });
+            });
         } catch (err) {
+
             return super.internalError(res, err);
         }
     }
@@ -37,7 +44,10 @@ export default new class UserController extends BaseController {
     public async deleteUser(req: express.Request, res: express.Response): Promise<void | any> {
         try {
             const id: string = super.getParam(req, "id");
-            return super.ok(res);
+            client.deleteUser({ id }, (err: any, user: any) => {
+                if (err !== null) return super.internalError(res, err);
+                return super.ok(res);
+            });
         } catch (err) {
             return super.internalError(res, err);
         }
