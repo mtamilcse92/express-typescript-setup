@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import bluebird from "bluebird";
 import routes from "./routes";
 import initializeMiddlewares from "./initializeMiddlewares";
+import "./util/secrets";
 
 const log = console.log;
 mongoose.Promise = bluebird;
